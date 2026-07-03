@@ -5,6 +5,7 @@ import com.example.task_management_api.domain.TaskStatus;
 import com.example.task_management_api.dto.TaskRequest;
 import com.example.task_management_api.dto.TaskResponse;
 import com.example.task_management_api.dto.UpdateTaskRequest;
+import com.example.task_management_api.exception.TaskNotFoundException;
 import com.example.task_management_api.repository.TaskRepository;
 import org.springframework.stereotype.Service;
 
@@ -42,7 +43,7 @@ public class TaskServiceImpl implements TaskService{
     @Override
     public TaskResponse getTaskById(String id) {
         Task task = taskRepository.findById(id).orElseThrow(()
-                -> new RuntimeException("Task not found with id: " + id));
+                -> new TaskNotFoundException("Task not found with id: " + id));
         return mapToTaskResponse(task);
     }
 
@@ -59,7 +60,7 @@ public class TaskServiceImpl implements TaskService{
     @Override
     public void deleteTaskById(String id) {
        if (!taskRepository.existsById(id)) {
-           throw new RuntimeException("Task not found with id: " + id);
+           throw new TaskNotFoundException("Task not found with id: " + id);
        }
 
        taskRepository.deleteById(id);
@@ -71,7 +72,7 @@ public class TaskServiceImpl implements TaskService{
 
         //find existing task
         Task task = taskRepository.findById(id).orElseThrow(
-                () -> new RuntimeException("Task not found with id: " + id));
+                () -> new TaskNotFoundException("Task not found with id: " + id));
 
         if (taskRequest.getTitle() != null) {
             task.setTitle(taskRequest.getTitle());
