@@ -53,7 +53,7 @@ public class TaskServiceImpl implements TaskService{
                 // Sort tasks by due date
                 .sorted(Comparator.comparing(Task::getDueDate))
                 .map(this::mapToTaskResponse)
-                .collect(Collectors.toUnmodifiableList());
+                .toList();
     }
 
     @Override
