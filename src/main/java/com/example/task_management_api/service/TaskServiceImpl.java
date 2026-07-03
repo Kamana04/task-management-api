@@ -36,6 +36,13 @@ public class TaskServiceImpl implements TaskService{
         return mapToTaskResponse(task);
     }
 
+    @Override
+    public TaskResponse getTaskById(String id) {
+        Task task = taskRepository.findById(id).orElseThrow(()
+                -> new RuntimeException("Task not found with id: " + id));
+        return mapToTaskResponse(task);
+    }
+
     private TaskResponse mapToTaskResponse(Task task) {
         return TaskResponse.builder()
                 .id(task.getId())

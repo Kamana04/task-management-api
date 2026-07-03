@@ -3,8 +3,12 @@ package com.example.task_management_api.repository;
 import com.example.task_management_api.domain.Task;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 public interface TaskRepository {
 
     Task save(Task task);
+
+    Optional<Task> findById(String id);
 }
