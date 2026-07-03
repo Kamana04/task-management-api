@@ -7,7 +7,10 @@ import com.example.task_management_api.dto.TaskResponse;
 import com.example.task_management_api.repository.TaskRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
+import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class TaskServiceImpl implements TaskService{
@@ -41,6 +44,16 @@ public class TaskServiceImpl implements TaskService{
         Task task = taskRepository.findById(id).orElseThrow(()
                 -> new RuntimeException("Task not found with id: " + id));
         return mapToTaskResponse(task);
+    }
+
+    @Override
+    public List<TaskResponse> getAllTasks() {
+        return taskRepository.findAll()
+                .stream()
+                // Sort tasks by due date
+                .sorted(Comparator.comparing(Task::getDueDate))
+                .map(this::mapToTaskResponse)
+                .collect(Collectors.toUnmodifiableList());
     }
 
     private TaskResponse mapToTaskResponse(Task task) {
