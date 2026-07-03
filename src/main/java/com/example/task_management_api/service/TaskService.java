@@ -1,5 +1,6 @@
 package com.example.task_management_api.service;
 
+import com.example.task_management_api.domain.TaskStatus;
 import com.example.task_management_api.dto.TaskRequest;
 import com.example.task_management_api.dto.TaskResponse;
 import com.example.task_management_api.dto.UpdateTaskRequest;
@@ -12,7 +13,7 @@ public interface TaskService {
 
     TaskResponse getTaskById(String id);
 
-    List<TaskResponse> getAllTasks();
+    List<TaskResponse> getAllTasks(TaskStatus status, int page, int size);
 
     void deleteTaskById(String id);
 

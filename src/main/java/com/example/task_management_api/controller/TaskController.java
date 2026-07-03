@@ -1,5 +1,6 @@
 package com.example.task_management_api.controller;
 
+import com.example.task_management_api.domain.TaskStatus;
 import com.example.task_management_api.dto.TaskRequest;
 import com.example.task_management_api.dto.TaskResponse;
 import com.example.task_management_api.dto.UpdateTaskRequest;
@@ -34,9 +35,15 @@ public class TaskController {
     }
 
     @GetMapping
-    public ResponseEntity<List<TaskResponse>> getAllTasks() {
-        List<TaskResponse> tasks = taskService.getAllTasks();
-        return ResponseEntity.ok(tasks);
+    public ResponseEntity<List<TaskResponse>> getAllTasks( @RequestParam(required = false)
+                                                               TaskStatus status,
+
+                                                           @RequestParam(defaultValue = "0")
+                                                               int page,
+
+                                                           @RequestParam(defaultValue = "5")
+                                                               int size) {
+        return ResponseEntity.ok(taskService.getAllTasks(status, page, size));
     }
 
     @DeleteMapping("/{id}")

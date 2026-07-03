@@ -9,6 +9,7 @@ import com.example.task_management_api.exception.TaskNotFoundException;
 import com.example.task_management_api.repository.TaskRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.UUID;
@@ -48,11 +49,27 @@ public class TaskServiceImpl implements TaskService{
     }
 
     @Override
-    public List<TaskResponse> getAllTasks() {
-        return taskRepository.findAll()
+    public List<TaskResponse> getAllTasks(TaskStatus status, int page, int size) {
+        List<Task> tasks = taskRepository.findAll();
+
+        //filter by status
+        if (status != null) {
+            tasks  = tasks.stream().filter(task -> task.getStatus() == status)
+                    .toList();
+        }
+        //sort tasks by due date
+        tasks.stream().sorted(Comparator.comparing(Task :: getDueDate)).toList();
+
+        //pagination
+        int start = page * size;
+
+        if(start >= tasks.size()) {
+            return Collections.emptyList();
+        }
+        int end = Math.min(start + size, tasks.size());
+
+        return tasks.subList(start, end)
                 .stream()
-                // Sort tasks by due date
-                .sorted(Comparator.comparing(Task::getDueDate))
                 .map(this::mapToTaskResponse)
                 .toList();
     }
