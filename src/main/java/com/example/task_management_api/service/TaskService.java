@@ -2,6 +2,7 @@ package com.example.task_management_api.service;
 
 import com.example.task_management_api.dto.TaskRequest;
 import com.example.task_management_api.dto.TaskResponse;
+import com.example.task_management_api.dto.UpdateTaskRequest;
 
 import java.util.List;
 
@@ -14,4 +15,6 @@ public interface TaskService {
     List<TaskResponse> getAllTasks();
 
     void deleteTaskById(String id);
+
+    TaskResponse updateTask(String id, UpdateTaskRequest taskRequest);
 }

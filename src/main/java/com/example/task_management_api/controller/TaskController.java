@@ -2,6 +2,7 @@ package com.example.task_management_api.controller;
 
 import com.example.task_management_api.dto.TaskRequest;
 import com.example.task_management_api.dto.TaskResponse;
+import com.example.task_management_api.dto.UpdateTaskRequest;
 import com.example.task_management_api.service.TaskService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -42,6 +43,15 @@ public class TaskController {
     public ResponseEntity<Void> deleteTask(@PathVariable String id) {
         taskService.deleteTaskById(id);
         return ResponseEntity.noContent().build();
+
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<TaskResponse> updateTask(@PathVariable String id,
+                                                   @Valid @RequestBody UpdateTaskRequest request) {
+        TaskResponse taskResponse = taskService.updateTask(id, request);
+        return ResponseEntity.ok(taskResponse);
+
 
     }
 }
