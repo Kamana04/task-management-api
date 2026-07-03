@@ -20,7 +20,7 @@ public class TaskResponse {
 
     private String description;
 
-    private TaskStatus taskStatus;
+    private TaskStatus status;
 
     private LocalDate dueDate;
 }

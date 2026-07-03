@@ -100,7 +100,7 @@ public class TaskServiceImpl implements TaskService{
                 .id(task.getId())
                 .title(task.getTitle())
                 .description(task.getDescription())
-                .taskStatus(task.getStatus())
+                .status(task.getStatus())
                 .dueDate(task.getDueDate())
                 .build();
     }
