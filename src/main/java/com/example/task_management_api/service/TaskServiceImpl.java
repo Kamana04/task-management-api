@@ -56,6 +56,16 @@ public class TaskServiceImpl implements TaskService{
                 .collect(Collectors.toUnmodifiableList());
     }
 
+    @Override
+    public void deleteTaskById(String id) {
+       if (!taskRepository.existsById(id)) {
+           throw new RuntimeException("Task not found with id: " + id);
+       }
+
+       taskRepository.deleteById(id);
+
+    }
+
     private TaskResponse mapToTaskResponse(Task task) {
         return TaskResponse.builder()
                 .id(task.getId())

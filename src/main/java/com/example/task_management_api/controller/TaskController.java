@@ -37,4 +37,11 @@ public class TaskController {
         List<TaskResponse> tasks = taskService.getAllTasks();
         return ResponseEntity.ok(tasks);
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteTask(@PathVariable String id) {
+        taskService.deleteTaskById(id);
+        return ResponseEntity.noContent().build();
+
+    }
 }

@@ -14,4 +14,8 @@ public interface TaskRepository {
     Optional<Task> findById(String id);
 
     List<Task> findAll();
+
+    void deleteById(String id);
+
+    boolean existsById(String id);
 }

@@ -12,4 +12,6 @@ public interface TaskService {
     TaskResponse getTaskById(String id);
 
     List<TaskResponse> getAllTasks();
+
+    void deleteTaskById(String id);
 }
